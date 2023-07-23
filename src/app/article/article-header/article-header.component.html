@@ -1,0 +1,18 @@
+<header class="post-header">
+  <h2 class="post-title">
+      <a *ngIf="!IsEdit" [href]="article.href">{{ article.title }}</a>
+   <input *ngIf="IsEdit" type="text" size="60" [(ngModel)]="article.title"
+   (keyup.enter)= "doEditTitle()"
+   (keyup.escape)= "doCancel()" />
+  </h2>
+  <div class="post-info clearfix">
+    <span class="post-date"><i class="glyphicon glyphicon-calendar"></i>{{ article.date }}</span>
+    <span class="post-author"><i class="glyphicon glyphicon-user"></i><a href="http://blog.miniasp.com/author/will.aspx">{{ article.author }}</a></span>
+    <span class="post-category"><i class="glyphicon glyphicon-folder-close"></i><a [href]="article.categoryLink">{{ article.category }}</a></span>
+    <span >
+      <button (click)="doDeleteArticle()">刪除文章</button>
+      <button  *ngIf="!IsEdit" (click)="IsEdit=true">編輯文章</button>
+      <button  *ngIf="IsEdit" (click)="doCancel()">取消編輯</button>
+    </span>
+  </div>
+</header>

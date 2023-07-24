@@ -12,18 +12,18 @@ export class ArticleService {
   url = `http://localhost:3000/articles`;
   // url = `http://localhost:4200/api/articles.json`;
 
-  //7.19 要改成return
+
   public async getArticle(): Promise<Article[]>{
-    const result$ = this.http.get<Article[]>(`${this.url}`);
-    return await lastValueFrom(result$);
+    const articles = this.http.get<Article[]>(`${this.url}`);
+    return await lastValueFrom(articles);
   }
 
-  async doDeleteArticle(id: string) {
-    return await lastValueFrom(this.http.delete(`${this.url}/${id}`));
+   doDeleteArticle(id: string) {
+    return lastValueFrom(this.http.delete(`${this.url}/${id}`));
   }
 
-  async doModify(article: Article) {
-    return await lastValueFrom(this.http.patch(`${this.url}/${article.id }`,article));
+   doModify(article: Article) {
+    return  lastValueFrom(this.http.patch(`${this.url}/${article.id }`,article));
   }
 
 }

@@ -42,12 +42,30 @@ export class ArticleComponent implements OnInit {
   }
 
   async onDeleteArticle(id: string) {
+    this.articles.update((articles: Article[]) => {
+      articles.splice(
+        articles.findIndex((article) => article.id === id),
+        1
+      );
+      return articles;
+    });
     await this.articleService.doDeleteArticle(id);
-    await this.getArticle();
   }
 
   async onModify(article: Article) {
+    const updatedArticles = (articles: Article[]) => {
+      return articles.map((originArticle: Article) => {
+        if (article.id === originArticle.id) {
+          // 若 id 符合要更新的 id，則回傳新的物件，更新 title 屬性
+          return { ...article, title: article.title };
+        } else {
+          // 若 id 不符合要更新的 id，則保持原本的物件
+          return article;
+        }
+      });
+    };
+    this.articles.update(updatedArticles);
     await this.articleService.doModify(article);
-    await this.getArticle();
+    // await this.getArticle();
   }
 }
